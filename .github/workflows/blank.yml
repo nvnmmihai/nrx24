@@ -1,0 +1,24 @@
+name: Commit du jour
+
+on:
+  schedule:
+    - cron: '23 8 * * *' # Tous les jours à 08:23 UTC
+  workflow_dispatch:
+
+jobs:
+  commit-du-jour:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cloner le dépôt
+        uses: actions/checkout@v4
+
+      - name: Configurer Git
+        run: |
+          git config user.name "TonNomGitHub"
+          git config user.email "tonmail@exemple.com"
+
+      - name: Créer un commit vide
+        run: |
+          git commit --allow-empty -m "🎯 Commit automatique du $(date +'%d/%m/%Y')"
+          git push
